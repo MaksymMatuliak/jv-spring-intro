@@ -18,5 +18,6 @@ public class Main {
         for (User user : userService.listUsers()) {
             System.out.println(user.toString());
         }
+        context.close();
     }
 }
