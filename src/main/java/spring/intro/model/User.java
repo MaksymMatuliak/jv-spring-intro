@@ -13,9 +13,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    Long userId;
-    String name;
-    String password;
+    private Long userId;
+    private String name;
+    private String password;
 
     public Long getUserId() {
         return userId;
