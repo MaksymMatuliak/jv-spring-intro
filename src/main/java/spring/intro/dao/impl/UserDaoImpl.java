@@ -2,21 +2,25 @@ package spring.intro.dao.impl;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import spring.intro.dao.UserDao;
 import spring.intro.model.User;
-import spring.intro.util.HibernateUtil;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public void add(User user) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -34,7 +38,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("FROM User");
             return query.list();
         } catch (Exception e) {
