@@ -21,6 +21,7 @@ import spring.intro.model.User;
 public class AppConfig {
     @Autowired
     private Environment environment;
+
     @Bean
     public DataSource getDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
