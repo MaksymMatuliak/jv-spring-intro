@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import spring.intro.model.User;
+import spring.intro.model.UserResponseDto;
 import spring.intro.service.UserService;
 
 @Controller
@@ -17,32 +17,32 @@ public class HelloController {
     private UserService userService;
 
     @GetMapping("/hello")
-    public User sayHello() {
-        User user = new User();
-        user.setName("Maks");
-        return user;
+    public UserResponseDto sayHello() {
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setName("Maks");
+        return userResponseDto;
     }
 
     @ResponseBody
     @GetMapping("/user/")
-    public List<User> getUsers() {
+    public List<UserResponseDto> getUsers() {
         return userService.listUsers();
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable Long id) {
+    public UserResponseDto getUser(@PathVariable Long id) {
         return userService.get(id);
     }
 
     @ResponseBody
     @GetMapping("/user/inject")
     public void inject() {
-        User user1 = new User();
-        user1.setName("Maks");
-        User user2 = new User();
-        user2.setName("Andriy");
-        userService.add(user1);
-        userService.add(user2);
+        UserResponseDto userResponseDto1 = new UserResponseDto();
+        userResponseDto1.setName("Maks");
+        UserResponseDto userResponseDto2 = new UserResponseDto();
+        userResponseDto2.setName("Andriy");
+        userService.add(userResponseDto1);
+        userService.add(userResponseDto2);
     }
 }

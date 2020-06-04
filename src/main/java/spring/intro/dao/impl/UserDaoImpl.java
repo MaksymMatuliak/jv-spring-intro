@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import spring.intro.dao.UserDao;
-import spring.intro.model.User;
+import spring.intro.model.UserResponseDto;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -16,19 +16,19 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void add(User user) {
+    public void add(UserResponseDto userResponseDto) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(user);
+            session.save(userResponseDto);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't create user");
+            throw new RuntimeException("Can't create userResponseDto");
         } finally {
             if (session != null) {
                 session.close();
@@ -37,9 +37,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<UserResponseDto> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("FROM User");
+            Query query = session.createQuery("FROM UserResponseDto");
             return query.list();
         } catch (Exception e) {
             throw new RuntimeException("Can't get list of users");
@@ -47,11 +47,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User get(Long id) {
+    public UserResponseDto get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("FROM User WHERE userId = :userId");
+            Query query = session.createQuery("FROM UserResponseDto WHERE userId = :userId");
             query.setParameter("userId", id);
-            return (User) query.getSingleResult();
+            return (UserResponseDto) query.getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException("Can't get user");
         }

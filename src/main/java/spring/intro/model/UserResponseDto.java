@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -43,7 +43,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", name='"
+        return "UserResponseDto{" + "userId=" + userId + ", name='"
                 + name + '\'' + ", password='" + password + '\'' + '}';
     }
 }
