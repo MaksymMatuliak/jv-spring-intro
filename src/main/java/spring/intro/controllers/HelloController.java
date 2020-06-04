@@ -31,7 +31,7 @@ public class HelloController {
         List<UserResponseDto> usersResponseDto = new ArrayList<>();
         for(User user : userService.listUsers()){
             UserResponseDto userResponseDto = new UserResponseDto();
-            usersResponseDto.add(userResponseDto.convertUserIntoUserResponseDto(user));
+            usersResponseDto.add(convertUserIntoUserResponseDto(user));
         }
         return usersResponseDto;
     }
@@ -40,7 +40,7 @@ public class HelloController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public UserResponseDto getUser(@PathVariable Long id) {
         UserResponseDto userResponseDto = new UserResponseDto();
-        return userResponseDto.convertUserIntoUserResponseDto(userService.get(id));
+        return convertUserIntoUserResponseDto(userService.get(id));
     }
 
     @ResponseBody
@@ -54,5 +54,12 @@ public class HelloController {
         user2.setPassword("tr");
         userService.add(user1);
         userService.add(user2);
+    }
+
+    private UserResponseDto convertUserIntoUserResponseDto(User user) {
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setUserId(user.getUserId());
+        userResponseDto.setName(user.getName());
+        return userResponseDto;
     }
 }
