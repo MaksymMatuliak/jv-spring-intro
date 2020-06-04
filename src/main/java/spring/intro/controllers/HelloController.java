@@ -1,5 +1,6 @@
 package spring.intro.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import spring.intro.model.User;
 import spring.intro.model.UserResponseDto;
 import spring.intro.service.UserService;
 
@@ -17,32 +19,45 @@ public class HelloController {
     private UserService userService;
 
     @GetMapping("/hello")
-    public UserResponseDto sayHello() {
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setName("Maks");
-        return userResponseDto;
+    public User sayHello() {
+        User user = new User();
+        user.setName("Maks");
+        return user;
     }
 
     @ResponseBody
     @GetMapping("/user/")
     public List<UserResponseDto> getUsers() {
-        return userService.listUsers();
+        List<UserResponseDto> usersResponseDto = new ArrayList<>();
+        for(User user : userService.listUsers()){
+            UserResponseDto userResponseDto = new UserResponseDto();
+            userResponseDto.setName(user.getName());
+            userResponseDto.setUserId(user.getUserId());
+            usersResponseDto.add(userResponseDto);
+        }
+        return usersResponseDto;
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public UserResponseDto getUser(@PathVariable Long id) {
-        return userService.get(id);
+        UserResponseDto userResponseDto = new UserResponseDto();
+        User user = userService.get(id);
+        userResponseDto.setUserId(user.getUserId());
+        userResponseDto.setName(user.getName());
+        return userResponseDto;
     }
 
     @ResponseBody
     @GetMapping("/user/inject")
     public void inject() {
-        UserResponseDto userResponseDto1 = new UserResponseDto();
-        userResponseDto1.setName("Maks");
-        UserResponseDto userResponseDto2 = new UserResponseDto();
-        userResponseDto2.setName("Andriy");
-        userService.add(userResponseDto1);
-        userService.add(userResponseDto2);
+        User user1 = new User();
+        user1.setName("Maks");
+        user1.setPassword("122");
+        User user2 = new User();
+        user2.setName("Andriy");
+        user2.setPassword("tr");
+        userService.add(user1);
+        userService.add(user2);
     }
 }

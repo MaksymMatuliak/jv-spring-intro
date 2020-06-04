@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import spring.intro.model.UserResponseDto;
+import spring.intro.model.User;
 
 @Configuration
 @PropertySource("classpath:db.properties")
@@ -40,7 +40,7 @@ public class AppConfig {
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         localSessionFactoryBean.setHibernateProperties(properties);
-        localSessionFactoryBean.setAnnotatedClasses(UserResponseDto.class);
+        localSessionFactoryBean.setAnnotatedClasses(User.class);
         return localSessionFactoryBean;
     }
 }
