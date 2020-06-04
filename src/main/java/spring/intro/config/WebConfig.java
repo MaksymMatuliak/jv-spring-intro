@@ -10,8 +10,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {
-        "spring.intro.controllers"
-}
+        "spring.intro.controllers"}
 )
 public class WebConfig {
     @Bean

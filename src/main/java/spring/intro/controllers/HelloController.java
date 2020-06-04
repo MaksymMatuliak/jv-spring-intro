@@ -29,7 +29,7 @@ public class HelloController {
     @GetMapping("/user/")
     public List<UserResponseDto> getUsers() {
         List<UserResponseDto> usersResponseDto = new ArrayList<>();
-        for(User user : userService.listUsers()){
+        for (User user : userService.listUsers()) {
             usersResponseDto.add(convertUserIntoUserResponseDto(user));
         }
         return usersResponseDto;
