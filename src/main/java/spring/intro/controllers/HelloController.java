@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spring.intro.model.User;
-import spring.intro.model.UserResponseDto;
+import spring.intro.model.dto.UserResponseDto;
 import spring.intro.service.UserService;
 
 @Controller
@@ -31,9 +31,7 @@ public class HelloController {
         List<UserResponseDto> usersResponseDto = new ArrayList<>();
         for(User user : userService.listUsers()){
             UserResponseDto userResponseDto = new UserResponseDto();
-            userResponseDto.setName(user.getName());
-            userResponseDto.setUserId(user.getUserId());
-            usersResponseDto.add(userResponseDto);
+            usersResponseDto.add(userResponseDto.convertUserIntoUserResponseDto(user));
         }
         return usersResponseDto;
     }
@@ -42,10 +40,7 @@ public class HelloController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public UserResponseDto getUser(@PathVariable Long id) {
         UserResponseDto userResponseDto = new UserResponseDto();
-        User user = userService.get(id);
-        userResponseDto.setUserId(user.getUserId());
-        userResponseDto.setName(user.getName());
-        return userResponseDto;
+        return userResponseDto.convertUserIntoUserResponseDto(userService.get(id));
     }
 
     @ResponseBody
