@@ -30,7 +30,6 @@ public class HelloController {
     public List<UserResponseDto> getUsers() {
         List<UserResponseDto> usersResponseDto = new ArrayList<>();
         for(User user : userService.listUsers()){
-            UserResponseDto userResponseDto = new UserResponseDto();
             usersResponseDto.add(convertUserIntoUserResponseDto(user));
         }
         return usersResponseDto;
@@ -39,7 +38,6 @@ public class HelloController {
     @ResponseBody
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public UserResponseDto getUser(@PathVariable Long id) {
-        UserResponseDto userResponseDto = new UserResponseDto();
         return convertUserIntoUserResponseDto(userService.get(id));
     }
 
